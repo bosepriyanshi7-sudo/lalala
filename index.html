@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>For Nurain ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{
+  background:#760707;
+  font-family:"DM Sans",sans-serif;
+  color:#2d2220;
+}
+button{font:inherit}
+#music{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-10px;top:-10px}
+
+.stage{
+  width:min(100vw,430px);
+  height:100dvh;
+  min-height:600px;
+  margin:auto;
+  background:#800707;
+  position:relative;
+  overflow:hidden;
+}
+.topline{
+  height:58px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:9px;
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  position:relative;
+  z-index:5;
+}
+.bottomline{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  position:relative;
+  z-index:5;
+}
+.card{
+  position:absolute;
+  left:27px;right:27px;
+  top:92px;bottom:42px;
+  background:
+    linear-gradient(rgba(155,80,70,.13) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(155,80,70,.13) 1px,transparent 1px),
+    #fffaf0;
+  background-size:28px 28px;
+  border:6px solid #170d0b;
+  border-radius:13px;
+  box-shadow:inset 0 0 0 2px #f0d8cf;
+  overflow:hidden;
+}
+.card:before,.card:after{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:2px dashed rgba(130,35,28,.35);
+  pointer-events:none;
+  z-index:0;
+}
+.gingham{
+  position:absolute;
+  width:155px;height:105px;
+  background:
+   repeating-linear-gradient(0deg,transparent 0 12px,rgba(190,20,20,.9) 12px 22px),
+   repeating-linear-gradient(90deg,transparent 0 12px,rgba(190,20,20,.9) 12px 22px);
+  opacity:.95;
+  z-index:1;
+}
+.gingham.tl{left:0;top:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.gingham.tr{right:0;top:0;transform:scaleX(-1);clip-path:polygon(0 0,100% 0,0 100%)}
+.gingham.bl{left:0;bottom:0;transform:scaleY(-1);clip-path:polygon(0 0,100% 0,0 100%)}
+.gingham.br{right:0;bottom:0;transform:scale(-1);clip-path:polygon(0 0,100% 0,0 100%)}
+
+.screen{
+  position:absolute;
+  inset:0;
+  padding:34px 32px 30px;
+  display:none;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:none;
+  z-index:2;
+}
+.screen::-webkit-scrollbar{display:none}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+
+h1,h2,h3,p{margin:0}
+.serif{font-family:"Playfair Display",serif;font-style:italic;color:#8c2424}
+.eyebrow{font-size:17px;letter-spacing:2px;font-weight:700;text-align:center;margin-top:70px}
+.title{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  color:#8c2424;
+  font-size:28px;
+  line-height:1.15;
+  text-align:center;
+  margin-top:25px;
+}
+.heart{font-size:30px;color:#8c2424;margin:8px 0}
+.hero-emojis{font-size:40px;letter-spacing:5px;margin:48px 0 30px;text-align:center}
+.wish{
+  font-size:21px;
+  line-height:1.5;
+  text-align:center;
+  color:#8c2424;
+  max-width:330px;
+}
+.big-silly{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  font-size:30px;
+  line-height:1.35;
+  color:#8c2424;
+  text-align:center;
+  margin-top:42px;
+}
+.btn{
+  border:3px solid #8d1515;
+  background:#fffaf0;
+  color:#741515;
+  border-radius:28px;
+  padding:13px 22px;
+  min-height:50px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 3px 0 #8d1515;
+  transition:.15s transform,.15s background;
+}
+.btn:active{transform:translateY(3px);box-shadow:0 0 0 #8d1515}
+.primary{margin-top:30px}
+.back{
+  align-self:flex-start;
+  margin:0 0 14px 0;
+  min-height:44px;
+  padding:9px 17px;
+  font-size:12px;
+}
+.center{width:100%;display:flex;flex-direction:column;align-items:center}
+.choice-title{
+  font-size:24px;
+  text-align:center;
+  color:#8c2424;
+  margin:10px 0 24px;
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+}
+.gifts{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:13px;
+  width:100%;
+  max-width:300px;
+}
+.gift{
+  width:100%;
+  min-height:82px;
+  border:3px solid #8d1515;
+  border-radius:20px;
+  background:#fffaf0;
+  color:#741515;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:13px 20px;
+  cursor:pointer;
+  box-shadow:0 3px 0 #8d1515;
+}
+.gift:active{transform:translateY(3px);box-shadow:0 0 0 #8d1515}
+.gift .emoji{font-size:38px}
+.gift b{font-size:17px;letter-spacing:1px}
+
+.subtext{text-align:center;font-size:14px;line-height:1.5;margin-top:10px;color:#7a4640}
+.experience-title{
+  font-size:22px;
+  line-height:1.25;
+  letter-spacing:1px;
+  text-align:center;
+  margin:2px 0 16px;
+}
+.experience-note{
+  text-align:center;
+  font-size:14px;
+  color:#7c3832;
+  margin:0 0 18px;
+}
+.flower-bouquet{
+  font-size:105px;
+  line-height:1;
+  margin:12px 0 20px;
+  filter:drop-shadow(0 5px 3px rgba(90,20,10,.15));
+  animation:bouquetPop .7s ease-out;
+}
+.cake-big{
+  font-size:105px;
+  line-height:1;
+  margin:12px 0 20px;
+  animation:cakePop .65s ease-out;
+}
+@keyframes bouquetPop{
+  0%{transform:scale(.2) rotate(-15deg);opacity:0}
+  70%{transform:scale(1.1) rotate(4deg);opacity:1}
+  100%{transform:scale(1) rotate(0)}
+}
+@keyframes cakePop{
+  0%{transform:translateY(35px) scale(.5);opacity:0}
+  70%{transform:translateY(-5px) scale(1.08);opacity:1}
+  100%{transform:translateY(0) scale(1)}
+}
+.envelope{
+  width:min(290px,90%);
+  height:190px;
+  background:#c81919;
+  border:6px solid #8e1010;
+  position:relative;
+  margin:8px auto 22px;
+  cursor:pointer;
+  box-shadow:0 5px 0 #8e1010;
+  overflow:hidden;
+}
+.envelope .paper{
+  position:absolute;
+  left:13%;right:13%;top:20%;bottom:8%;
+  background:#fff8e9;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:14px;
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  color:#8c2424;
+  font-size:19px;
+}
+.flap{
+  position:absolute;left:0;right:0;top:0;height:62%;
+  background:#d61c1c;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  z-index:3;
+  transition:.55s transform;
+  transform-origin:top;
+}
+.seal{
+  position:absolute;z-index:4;left:50%;top:47%;
+  transform:translate(-50%,-50%);
+  width:50px;height:50px;border-radius:50%;
+  background:#f7dfbd;
+  display:flex;align-items:center;justify-content:center;
+  font-size:25px;
+}
+.envelope.open .flap{transform:rotateX(180deg)}
+.envelope.open .seal{opacity:0}
+
+.reveal{
+  width:100%;
+  background:rgba(255,250,240,.9);
+  border:2px solid rgba(141,21,21,.28);
+  border-radius:18px;
+  padding:17px;
+  text-align:center;
+  color:#8c2424;
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  font-size:21px;
+  line-height:1.45;
+  margin-bottom:18px;
+}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;width:100%}
+.actions .btn{flex:1 1 135px}
+
+.letter-paper{
+  width:100%;
+  background:#fffdf5;
+  border:2px solid #d8b8a9;
+  padding:22px 20px;
+  margin:3px 0 18px;
+  box-shadow:0 4px 14px rgba(80,20,10,.12);
+}
+.letter-paper h2{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  color:#8c2424;
+  text-align:center;
+  margin-bottom:18px;
+  font-size:25px;
+}
+.letter-paper p{
+  font-family:"Playfair Display",serif;
+  font-size:16px;
+  line-height:1.75;
+  color:#512522;
+  margin-bottom:15px;
+}
+.signature{text-align:right!important;font-style:italic}
+
+.final-wish{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  color:#8c2424;
+  font-size:27px;
+  line-height:1.4;
+  text-align:center;
+  margin:30px 0 18px;
+}
+.completion-choices{width:100%;margin-top:4px;padding-bottom:12px}
+.flower-bouquet{
+  font-size:92px;
+  line-height:1;
+  margin:12px 0 16px;
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .15s ease;
+}
+.flower-bouquet:active{transform:scale(.88) rotate(-5deg)}
+.final-emoji{
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.final-emoji:active{transform:scale(.9)}
+.final-small{
+  text-align:center;
+  font-size:15px;
+  line-height:1.6;
+  color:#713c37;
+  max-width:300px;
+}
+.final-emoji{font-size:48px;margin:18px 0}
+
+#effects{position:absolute;inset:0;pointer-events:none;z-index:10;overflow:hidden}
+.particle{
+  position:absolute;
+  top:-60px;
+  animation:fall linear forwards;
+  will-change:transform,opacity;
+}
+@keyframes fall{
+  0%{transform:translate3d(0,-50px,0) rotate(0deg);opacity:0}
+  10%{opacity:1}
+  100%{transform:translate3d(var(--drift),760px,0) rotate(720deg);opacity:.95}
+}
+.confetti{
+  position:absolute;
+  width:9px;height:14px;
+  top:-30px;
+  animation:confetti 2.5s linear forwards;
+}
+@keyframes confetti{
+  0%{transform:translateY(-30px) rotate(0)}
+  100%{transform:translateY(780px) rotate(760deg);opacity:0}
+}
+.star{
+  position:absolute;
+  animation:pop .9s ease-out forwards;
+}
+@keyframes pop{
+  0%{transform:scale(0) rotate(-30deg);opacity:0}
+  60%{transform:scale(1.3) rotate(15deg);opacity:1}
+  100%{transform:scale(1) rotate(0);opacity:0}
+}
+
+.no-screen .choice-title{font-size:31px;margin-top:70px}
+.no-face{font-size:70px;margin:30px 0}
+.no-screen .subtext{font-size:17px}
+
+@media(max-height:700px){
+  .topline{height:48px}
+  .card{top:78px;bottom:35px}
+  .screen{padding-top:24px}
+  .eyebrow{margin-top:45px}
+  .hero-emojis{margin:28px 0 20px}
+  .big-silly{margin-top:24px;font-size:26px}
+}
+</style>
+</head>
+<body>
+<div id="music"></div>
+<div class="stage">
+  <div class="topline">for my favourite person ♡</div>
+
+  <div class="card">
+    <div class="gingham tl"></div><div class="gingham tr"></div>
+    <div class="gingham bl"></div><div class="gingham br"></div>
+
+    <!-- INTRO -->
+    <section class="screen active" id="s1">
+      <div class="eyebrow">ONE LAST LITTLE THING</div>
+      <div class="title">Happy Birthday, Nurain</div>
+      <div class="heart">♡</div>
+      <div class="hero-emojis">🎀 🥹 💗 ✨<br>🎂</div>
+      <p class="wish" style="font-size:17px;max-width:260px">
+        A tiny birthday surprise for you. ♡
+      </p>
+      <button class="btn primary" onclick="go(2)">♡ LET ME IN ♡</button>
+    </section>
+
+    <!-- ACCEPT -->
+    <section class="screen" id="s2">
+      <button class="btn back" onclick="go(1)">← BACK</button>
+      <div class="center" style="margin-top:55px">
+        <div class="hero-emojis" style="margin:20px 0">🎁🥹🎀</div>
+        <h2 class="choice-title">I made you a tiny birthday surprise.</h2>
+        <p class="subtext">Are you going to accept it like a civilized person?</p>
+        <button class="btn primary" onclick="go(4)">YES, OBVIOUSLY ♡</button>
+        <button class="btn" id="noBtn" style="margin-top:14px" onclick="escapeNo()">NO 🙄</button>
+      </div>
+    </section>
+
+    <!-- NO -->
+    <section class="screen no-screen" id="s3">
+      <button class="btn back" onclick="go(2)">← BACK</button>
+      <div class="center">
+        <div class="no-face">😭</div>
+        <h2 class="choice-title">WHY DID YOU CLICK NO?!</h2>
+        <p class="subtext">That button was decorative. I thought we discussed this.</p>
+        <button class="btn primary" onclick="go(2)">FINE, TRY AGAIN ♡</button>
+      </div>
+    </section>
+
+    <!-- GIFTS -->
+    <section class="screen" id="s4">
+      <button class="btn back" onclick="go(2)">← BACK</button>
+      <div class="center">
+        <div class="eyebrow" style="margin-top:8px">CHOOSE YOUR CHAOS</div>
+        <h2 class="choice-title">Pick one. Then you can come back for the others.</h2>
+        <p class="subtext" style="margin-bottom:20px">Each one has its own little surprise.</p>
+        <div class="gifts">
+          <button class="gift" onclick="pick('letter')"><span class="emoji">💌</span><b>LETTER</b></button>
+          <button class="gift" onclick="pick('flowers')"><span class="emoji">💐</span><b>FLOWERS</b></button>
+          <button class="gift" onclick="pick('cake')"><span class="emoji">🎂</span><b>CAKE</b></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIFT EXPERIENCE -->
+    <section class="screen" id="s5">
+      <button class="btn back" onclick="go(4)">← BACK TO GIFTS</button>
+      <div class="center" id="experienceContent"></div>
+    </section>
+
+    <!-- FINAL LETTER / FLOWER / CAKE -->
+    <section class="screen" id="s6">
+      <button class="btn back" onclick="go(4)">← BACK TO GIFTS</button>
+      <div class="center" id="finalContent"></div>
+    </section>
+
+    <!-- ALL THREE DONE -->
+    <section class="screen" id="s7">
+      <div class="center" style="margin-top:65px">
+        <div class="hero-emojis" style="margin:10px 0 28px">🎀 ✨ 🥹 ✨ 🎀</div>
+        <div class="eyebrow" style="margin-top:0">THAT'S ALL FOR THIS YEAR ♡</div>
+        <h2 class="final-wish" style="margin-top:25px">
+          You found all three.<br>
+          I hope you liked your tiny birthday chaos.
+        </h2>
+        <p class="final-small">
+          Maybe next year I'll make something even crazier.<br>
+          Until then, this little chaos will have to do. 😭
+        </p>
+        <div class="final-emoji">🎂💌🌷</div>
+        <button class="btn" onclick="completed.clear();selectionOrder.length=0;go(4);clearEffects()">REPLAY THE SURPRISES ♡</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="effects"></div>
+  <div class="bottomline">made with love ♡</div>
+</div>
+
+<script>
+const MUSIC_ID="21XOT_a6z84";
+let noCount=0;
+let current="letter";
+let musicStarted=false;
+const completed = new Set();
+const selectionOrder = [];
+
+function startMusic(){
+  if(musicStarted) return;
+  musicStarted = true;
+
+  const frame = document.createElement("iframe");
+  frame.id = "birthdayMusicFrame";
+  frame.src =
+    `https://www.youtube.com/embed/${MUSIC_ID}` +
+    `?autoplay=1&playsinline=1&controls=0&loop=1` +
+    `&playlist=${MUSIC_ID}&rel=0&modestbranding=1`;
+  frame.allow = "autoplay; encrypted-media";
+  frame.setAttribute("allowfullscreen","");
+  frame.style.cssText =
+    "position:absolute;width:2px;height:2px;left:-5px;bottom:1px;" +
+    "border:0;opacity:0;pointer-events:none;";
+  document.getElementById("music").appendChild(frame);
+}
+
+function go(n){
+  if(n===2 || n===4) startMusic();
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("s"+n).classList.add("active");
+  if(n===4) clearEffects();
+  if(n===5 && !document.getElementById("experienceContent").innerHTML.trim()) renderExperience(current);
+}
+
+function escapeNo(){
+  noCount++;
+  if(noCount>=1){
+    document.getElementById("noBtn").style.transform=`translate(${Math.random()*90-45}px,${Math.random()*35-15}px)`;
+  }
+  if(noCount>=4){
+    document.getElementById("noBtn").textContent="NO 😭";
+    setTimeout(()=>go(3),300);
+  }
+}
+
+const data={
+  letter:{
+    title:"ONE LITTLE LETTER",
+    reveal:"Some things are better written than said. ♡",
+    action:"OPEN THE LETTER 💌"
+  },
+  flowers:{
+    title:"A TINY BOUQUET FOR YOU",
+    reveal:"No watering required. Just look cute and pretend these are real. 🌷",
+    action:"RECEIVE THE FLOWERS 🌷"
+  },
+  cake:{
+    title:"BIRTHDAY CAKE DELIVERY",
+    reveal:"Zero calories. I checked with absolutely nobody. 🎂",
+    action:"EAT THE CAKE 🎂"
+  }
+};
+
+function pick(type){
+  startMusic();
+  current = type;
+
+  if(!selectionOrder.includes(type)){
+    selectionOrder.push(type);
+  }
+
+  renderExperience(type);
+  go(5);
+
+  if(type==="flowers"){
+    flowerRain(42);
+  }else if(type==="cake"){
+    cakeRain(48);
+  }else{
+    letterSparkles();
+  }
+}
+
+function renderExperience(type){
+  const box=document.getElementById("experienceContent");
+
+  if(type==="letter"){
+    box.innerHTML=`
+      <div class="eyebrow" style="margin-top:3px">SURPRISE ${Math.max(1, selectionOrder.indexOf("letter")+1)} OF 3</div>
+      <h2 class="experience-title">ONE LITTLE LETTER</h2>
+      <div id="letterExperience">
+        <div class="envelope" id="envelope" onclick="openEnvelope()">
+          <div class="paper">tap me<br>I'm shy 💌</div>
+          <div class="flap"></div><div class="seal">♥</div>
+        </div>
+        <div class="reveal">Some things are better written than said. ♡</div>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="mainAction()">OPEN THE LETTER 💌</button>
+        <button class="btn" onclick="go(4)">CHOOSE ANOTHER ♡</button>
+      </div>
+    `;
+  }
+
+  if(type==="flowers"){
+    box.innerHTML=`
+      <div class="eyebrow" style="margin-top:3px">SURPRISE ${Math.max(1, selectionOrder.indexOf("flowers")+1)} OF 3</div>
+      <h2 class="experience-title">A TINY BOUQUET FOR YOU 🌷</h2>
+      <div class="flower-bouquet" onclick="flowerRain(35)" title="tap the bouquet">💐</div>
+      <div class="reveal">
+        A bouquet that doesn't need watering,<br>
+        because I would definitely forget. 😭🌷
+      </div>
+      <p class="subtext">The flowers are dramatic. Just like birthdays should be.</p>
+      <div class="actions" style="margin-top:20px">
+        <button class="btn" onclick="flowerRain(45)">MORE FLOWERS 🌷</button>
+        <button class="btn" onclick="go(4)">CHOOSE ANOTHER ♡</button>
+      </div>
+    `;
+    flowerRain(55);
+  }
+
+  if(type==="cake"){
+    box.innerHTML=`
+      <div class="eyebrow" style="margin-top:3px">SURPRISE ${Math.max(1, selectionOrder.indexOf("cake")+1)} OF 3</div>
+      <h2 class="experience-title">A CAKE JUST FOR YOU 🎂</h2>
+      <div class="cake-big">🎂</div>
+      <div class="reveal">
+        Please accept this cake as proof<br>
+        that birthday calories are fictional. 🎂
+      </div>
+      <p class="subtext">Eat it before someone else mysteriously appears.</p>
+      <div class="actions" style="margin-top:20px">
+        <button class="btn" onclick="mainAction()">EAT THE CAKE 🎂</button>
+        <button class="btn" onclick="go(4)">CHOOSE ANOTHER ♡</button>
+      </div>
+    `;
+    cakeRain(55);
+  }
+}
+
+function resetExperience(){
+  renderExperience(current);
+}
+
+function mainAction(){
+  if(current==="letter"){
+    openEnvelope();
+    setTimeout(()=>showFinal("letter"),650);
+  }else if(current==="flowers"){
+    flowerRain(75);
+    setTimeout(()=>showFinal("flowers"),500);
+  }else{
+    cakeRain(80);
+    setTimeout(()=>showFinal("cake"),500);
+  }
+}
+
+function openEnvelope(){
+  const env=document.getElementById("envelope");
+  if(env) env.classList.add("open");
+}
+
+function showFinal(type){
+  completed.add(type);
+  const box=document.getElementById("finalContent");
+  if(type==="letter"){
+    box.innerHTML=`
+      <div class="eyebrow" style="margin-top:4px">FROM ME TO YOU ♡</div>
+      <div class="letter-paper">
+        <h2>Dear Nurain,</h2>
+        <p>Happy birthday to one of the most wonderfully ridiculous people I know. 🥹💗</p>
+        <p>I hope this year gives you an unreasonable amount of happiness, good food, pretty sunsets, money that mysteriously appears in your account, and absolutely no unnecessary drama.</p>
+        <p>May your bad days be short, your naps be long, your camera roll be full of stupid pictures, and your life be filled with people who make you laugh until your stomach hurts.</p>
+        <p>And please remember: you are officially too precious to be allowed to have a boring birthday. This is a legally binding statement. I don't make the rules. 🎀</p>
+        <p>Stay exactly as chaotic, lovely and impossible to replace as you are.</p>
+        <p class="signature">Now go eat cake before I eat it for you. 🎂<br>♡</p>
+      </div>
+      <button class="btn" onclick="go(4)">CHOOSE ANOTHER SURPRISE ♡</button>
+    `;
+    letterSparkles();
+  }
+
+  if(type==="flowers"){
+    box.innerHTML=`
+      <div class="final-emoji" onclick="flowerRain(45)" style="cursor:pointer" title="tap for more flowers">💐🌷🌸</div>
+      <div class="eyebrow" style="margin-top:0">FLOWERS FOR THE BIRTHDAY GIRL ♡</div>
+      <div class="final-wish">A bouquet that will never die,<br>because I have absolutely no idea how to keep plants alive.</div>
+      <p class="final-small">May your year be soft, pretty, slightly chaotic, and filled with tiny moments that make you randomly smile. 🌷</p>
+      <button class="btn" style="margin-top:22px" onclick="go(4)">PICK ANOTHER SURPRISE ♡</button>
+    `;
+    flowerRain(65);
+  }
+
+  if(type==="cake"){
+    box.innerHTML=`
+      <div class="final-emoji">🎂🎉🥳</div>
+      <div class="eyebrow" style="margin-top:0">CAKE HAS ARRIVED</div>
+      <div class="final-wish">Your only responsibility today is to look cute, eat cake, and accept compliments like the celebrity you clearly think you are.</div>
+      <p class="final-small">Birthday rule #1: dessert does not count today.<br>Birthday rule #2: I made up rule #1, so obviously it is valid. 🎂</p>
+      <button class="btn" style="margin-top:22px" onclick="go(4)">PICK ANOTHER SURPRISE ♡</button>
+    `;
+    cakeRain(60);
+  }
+  go(6);
+
+  if(completed.size === 3){
+    showEndChoices();
+  }
+}
+
+function showEndChoices(){
+  const box = document.getElementById("finalContent");
+
+  const choices = document.createElement("div");
+  choices.className = "completion-choices";
+  choices.innerHTML = `
+    <p class="final-small" style="margin-top:18px">
+      That's all three surprises. Take your time. ♡
+    </p>
+    <div class="actions" style="margin-top:15px">
+      <button class="btn" onclick="endSurprise()">END THE SURPRISE ♡</button>
+      <button class="btn" onclick="go(4);clearEffects()">OPEN ANOTHER SURPRISE</button>
+    </div>
+  `;
+  box.appendChild(choices);
+}
+
+function endSurprise(){
+  clearEffects();
+  go(7);
+  finalCelebration();
+}
+
+function finalCelebration(){
+  clearEffects();
+  const things=["✨","🎀","💗","⭐","🥳","🎂","💌","🌷"];
+  for(let i=0;i<35;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.textContent=things[Math.floor(Math.random()*things.length)];
+    p.style.left=Math.random()*100+"%";
+    p.style.fontSize=(14+Math.random()*20)+"px";
+    p.style.animationDuration=(3+Math.random()*3)+"s";
+    p.style.animationDelay=(Math.random()*1.2)+"s";
+    p.style.setProperty("--drift",(Math.random()*220-110)+"px");
+    document.getElementById("effects").appendChild(p);
+  }
+}
+
+function clearEffects(){
+  document.getElementById("effects").innerHTML="";
+}
+
+function flowerRain(count){
+  const flowers=["🌷","🌸","🌺","🌼","💮","🪻","🌹","🌻","🪷"];
+
+  for(let i=0;i<count;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.textContent=flowers[Math.floor(Math.random()*flowers.length)];
+    p.style.left=Math.random()*100+"%";
+    p.style.fontSize=(16+Math.random()*24)+"px";
+    p.style.animationDuration=(3.2+Math.random()*3)+"s";
+    p.style.animationDelay=(Math.random()*1.2)+"s";
+    p.style.setProperty("--drift",(Math.random()*180-90)+"px");
+    document.getElementById("effects").appendChild(p);
+  }
+}
+
+function cakeRain(count){
+  clearEffects();
+  const things=["🎉","✨","⭐","🎊","🍰","🎂","💗","🥳"];
+  for(let i=0;i<count;i++){
+    const p=document.createElement("div");
+    p.className=Math.random()>.45?"particle":"confetti";
+    p.textContent=things[Math.floor(Math.random()*things.length)];
+    p.style.left=Math.random()*100+"%";
+    p.style.fontSize=(14+Math.random()*22)+"px";
+    p.style.animationDuration=(2+Math.random()*2.5)+"s";
+    p.style.animationDelay=(Math.random()*1.2)+"s";
+    p.style.setProperty("--drift",(Math.random()*220-110)+"px");
+    document.getElementById("effects").appendChild(p);
+  }
+}
+
+function letterSparkles(){
+  clearEffects();
+  const stars=["♡","✦","✧","💌","✨"];
+  for(let i=0;i<20;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.textContent=stars[Math.floor(Math.random()*stars.length)];
+    s.style.left=(8+Math.random()*84)+"%";
+    s.style.top=(10+Math.random()*75)+"%";
+    s.style.fontSize=(13+Math.random()*16)+"px";
+    s.style.animationDelay=(Math.random()*1.4)+"s";
+    document.getElementById("effects").appendChild(s);
+  }
+}
+</script>
+</body>
+</html>
